@@ -1,4 +1,4 @@
-jQuery.noConflict();
+﻿jQuery.noConflict();
 function getResultLen(qst) {
 	if(qst.indexOf("（一个") != -1) {
 		return 1;
@@ -74,11 +74,15 @@ function getResult() {
 	return result;
 }
 function hack() {
+	if(jQuery("#countdown").text() == "000000" && !jQuery("#countdown").data("click")) {
+		jQuery(".honor-btn-go").click();
+		jQuery("#countdown").data("click", true);
+	}
 	if(jQuery("#answer").length > 0) {
 		jQuery("#answer").val(getResult());
 		jQuery("#submit_answer").click();
 	}
 }
 jQuery(function(){
-	window.setInterval(hack, 500);
+	window.setInterval(hack, 50);
 });
