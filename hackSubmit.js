@@ -1,4 +1,5 @@
-﻿jQuery.noConflict();
+﻿window.alert = function (msg) {console.log("alert:" + msg)};
+jQuery.noConflict();
 function getResultLen(qst) {
 	if(qst.indexOf("（一个") != -1) {
 		return 1;
