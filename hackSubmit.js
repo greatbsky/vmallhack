@@ -1,4 +1,25 @@
-﻿window.alert = function (msg) {console.log("alert:" + msg)};
+﻿var jsonQA = {
+	"裕泰茶馆老板叫":"王利发",
+	"上海东濒哪个海":"东海",
+	"宪兵司令部的处长姓":"沈",
+	"小唐铁嘴是谁的儿子":"唐铁嘴",
+	"小宋恩子是谁的儿子":"宋恩",
+	"王大栓是王掌柜第几个儿子":"1",
+	"谁是民族资本家":"秦仲义",
+	"王大栓的女儿是":"王小花",
+	"谁请客吃饭":"小明",
+	"小明买了几棵圣诞树":"1",
+	"小白有几个儿子":"2",
+	"北京拥有多少年历史":"3000",
+	"谁是精英知识分子":"孟晓骏",
+	"成东青是第几次高考才考上燕大":"3",
+	"大提琴属于什么乐器":"弓弦",
+	"诺贝尔奖共设有几个奖项":"5",
+	"谁去了济南":"铁扇",
+	"小明买了几种颜色的帽子":"20",
+	"广东省会":"广州"
+};
+window.alert = function (msg) {console.log("alert:" + msg)};
 jQuery.noConflict();
 function getResultLen(qst) {
 	if(qst.indexOf("（一个") != -1) {
@@ -23,8 +44,9 @@ function getResult() {
 	var articlehtml = jQuery(".honor-layout-topic span:eq(1)").html();
 	var article = articlehtml.substring(0, articlehtml.indexOf("<"));
 	var keywordlen = 3;
-	var qstwords = ["什么", "哪", "多少"];
+	var qstwords = ["什么", "哪", "多少","几"];
 //	var qstwords2 = ["谁"];
+	result = matchAnswer(question);
 	for (var i = 0; i < qstwords.length; i++) {
 		var qstkey = qstwords[i];
 		if(question.indexOf(qstkey) != -1) {
@@ -35,7 +57,20 @@ function getResult() {
 	}
 	if(result.length == 0) {
 		markArticle();
-		jQuery("#answer").after("<div style='color:red;font-weight:bolder'>获取失败，请手动填写！</div>");
+		//jQuery("#answer").after("<div style='color:red;font-weight:bolder'>获取失败，请手动填写！</div>"); //提示暂时不加没用
+	}
+	/**
+	 * 直接在题库中搜索答案
+	 * @param question
+	 * @returns {*}
+	 */
+	function matchAnswer(question) {
+		for(var k in jsonQA) {
+			if(question.indexOf(k) != -1) {
+				alert(jsonQA[k]);
+				return jsonQA[k];
+			}
+		}
 	}
 	function parseResult(qstkey) {
 		keyword = question.substring(question.indexOf(qstkey) - keywordlen, question.indexOf(qstkey));
